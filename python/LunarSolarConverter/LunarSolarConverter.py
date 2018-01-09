@@ -3,6 +3,51 @@
 __author__ = 'isee15'
 from pprint import pprint
 
+# 　todo：正月初一 == 春节   腊月二十九/三十 == 除夕
+shuzi = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"]
+yuefeng = [
+    "正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "冬月", "腊月"
+]
+riqi = [
+    "初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十", "十一", "十二",
+    "十三", "十四", "十五", "十六", "十七", "十八", "十九", "廿十", "廿一", "廿二", "廿三", "廿四",
+    "廿五", "廿六", "廿七", "廿八", "廿九", "三十"
+]
+
+xingqi = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"]
+
+tiangan = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"]
+dizhi = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]
+shengxiao = ["鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"]
+
+# todo：添加节气
+jieqi = [
+    "小寒",
+    "大寒",  # 1月
+    "立春",
+    "雨水",  # 2月
+    "惊蛰",
+    "春分",  # 3月
+    "清明",
+    "谷雨",  # 4月
+    "立夏",
+    "小满",  # 5月
+    "芒种",
+    "夏至",  # 6月
+    "小暑",
+    "大暑",  # 7月
+    "立秋",
+    "处暑",  # 8月
+    "白露",
+    "秋分",  # 9月
+    "寒露",
+    "霜降",  # 10月
+    "立冬",
+    "小雪",  # 11月
+    "大雪",
+    "冬至",  # 12月
+]
+
 
 class Lunar:
     def __init__(self, lunarYear, lunarMonth, lunarDay, isleap):
@@ -10,6 +55,19 @@ class Lunar:
         self.lunarDay = lunarDay
         self.lunarMonth = lunarMonth
         self.lunarYear = lunarYear
+
+    def __formatNum(self, num):
+        result = ""
+        numArr = str(num);
+        for index in range(0, len(numArr)):
+            result += shuzi[int(numArr[index])];
+        return result;
+
+        
+    def __str__(self):
+        return "%s年%s%s%s" % (self.__formatNum(self.lunarYear), self.isleap and "闰" or "",
+                              yuefeng[self.lunarMonth - 1], riqi[self.lunarDay
+                                                                 - 1])
 
 
 class Solar:
@@ -196,9 +254,15 @@ class LunarSolarConverter:
 
 if __name__ == '__main__':
     converter = LunarSolarConverter()
-    solar = Solar(2015, 1, 25)
+    solar = Solar(2017, 8, 10)
     pprint(vars(solar))
     lunar = converter.SolarToLunar(solar)
+    print(lunar)
+
+    solar = Solar(2017, 7, 1)
+    pprint(vars(solar))
+    lunar = converter.SolarToLunar(solar)
+    print(lunar)
     pprint(vars(lunar))
     solar = converter.LunarToSolar(lunar)
     pprint(vars(solar))
